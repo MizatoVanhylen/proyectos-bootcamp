@@ -36,23 +36,23 @@ app.get('/ejemplo', (req, res) => {
 //   console.log(`Servidor corriendo en el puerto ${argv.port}`);
 // });
 
-app.get('/hora', (req, res) => {
-  const fecha = {
-    formato1: moment().format('MMMM do YYYY, h:mm:ss a'),
-    formato2: moment().format('dddd'),
-    formato3: moment().format('YYYY-MM-DD')
-  };
-  res.json(fecha);
-});
+// app.get('/hora', (req, res) => {
+//   const fecha = {
+//     formato1: moment().format('MMMM do YYYY, h:mm:ss a'),
+//     formato2: moment().format('dddd'),
+//     formato3: moment().format('YYYY-MM-DD')
+//   };
+//   res.json(fecha);
+// });
 
-io.on('connection', (Socket) => {
-  console.log('Nuevo cliente conectado');
+// io.on('connection', (Socket) => {
+//   console.log('Nuevo cliente conectado');
 
-  Socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
-  });
-});
+//   Socket.on('disconnect', () => {
+//     console.log('Cliente desconectado');
+//   });
+// });
 
-httpServer.listen(argv.port, () => {
-  console.log(`Servidor con Socket.IO en el puerto ${argv.port}`);
-});
+// httpServer.listen(argv.port, () => {
+//   console.log(`Servidor con Socket.IO en el puerto ${argv.port}`);
+// });
