@@ -1,0 +1,40 @@
+###  Probar SPA (HTML)
+GET http://localhost:3000
+
+###
+
+### Obtener todas las notas
+GET http://localhost:3000/api/notes
+
+###
+
+### Obtener nota por id (existe)
+GET http://localhost:3000/api/notes/1
+
+###
+
+### Obtener nota por id (NO existe → 404)
+GET http://localhost:3000/api/notes/999
+
+###
+
+### Crear nueva nota (válido)
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "content": "Nueva nota desde test",
+  "important": true
+}
+
+###
+
+### Crear nota sin contenido (error → 400)
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "important": false
+}
+
+###
