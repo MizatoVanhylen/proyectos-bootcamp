@@ -3,15 +3,12 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import morgan from 'morgan';
 import moment from 'moment';
-import fs from 'fs';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
 const app = express();
-
 const httpServer = createServer(app);
 const io = new Server(httpServer);
-
 app.use(morgan('dev'));
 
 // 1.Configuración de yargs para capturar el puerto 

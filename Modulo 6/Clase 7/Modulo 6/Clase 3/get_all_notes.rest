@@ -1,5 +1,0 @@
-### Probar SPA
-GET http://localhost:3000
- 
-### Obtener todas las notas
-GET http://localhost:3000/api/notes
