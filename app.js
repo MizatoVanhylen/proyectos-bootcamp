@@ -1,23 +1,51 @@
-import express from 'express';
-import moment from 'moment';
-import hbs from 'hbs';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import express from "express"; // Módulo Express
+import moment from "moment";
+import path from "path";
+import hbs from "hbs";
+import { fileURLToPath } from "url";
 
+// Creamos la aplicacion expresss.
 const app = express();
-const PORT = 3001;
 
+// Configuracion de entorno
+const PORT = 3000;
+
+// Configuracion de hadlebars
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
+
+// Helper 1: convertir a mayúscula
+hbs.registerHelper('mayuscula', function (texto) {
+  return texto.toUpperCase();
+});
+
+// Helper 2: obtener año actual
+hbs.registerHelper('anio', function () {
+  return new Date().getFullYear();
+});
+
+// Helper 3: formatear fecha con moment
+hbs.registerHelper('fecha', function () {
+  return moment().format("DD/MM/YYYY");
+});
+
+// Helper 4: condicional simple
+hbs.registerHelper('esAbogado', function (profesion) {
+  return profesion === 'Abogado' ? 'Es abogado' : 'Otro rubro';
+});
+
+// Helper 5: contador de caracteres
+hbs.registerHelper('longitud', function (texto) {
+  return texto.length;
+});
+
+
+// Middlewares
 app.use(express.json());
-app.use(express.static('public'))
-
-// Configuración de hadlebars
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, 'views'))
-
+app.use(express.static("public"));
 
 // Middleware personalizado (logging básico) con fecha (usando moment)
 app.use((req, res, next) => {
@@ -39,26 +67,37 @@ app.use((req, res, next) => {
   next();
 });
 
-// RUTAS
-
-// app.get('/', (req, res) => {
-//   res.send("API funcionando correctamente");
-// });
-
-app.get('/', (req, res) => {
-  res.render('index', {
+// Rutas
+app.get("/", (req, res) => {
+  console.log("Renderizando Home");
+  res.render("index", {
     nombre: "Ivan Gonzales",
-    profesion: "Abogado"
+    profesion: "Abogado",
   });
 });
 
-app.get('/about', (req, res) => {
-  res.render('about', {
+app.get("/about", (req, res) => {
+  console.log("Renderizando about");
+
+  res.render("about", {
     nombre: "Ivan Gonzales",
-    descripcion: "Abogado y programador a tiempo completo"
+    Descripcion: "Abogado y programador a tiempo completo",
   });
 });
 
+app.get("/array", (req, res) => {
+  const personas = [
+    { name: "Juan", profession: "Desarrollador Web" },
+    { name: "María", profession: "Diseñadora UX" },
+    { name: "Pedro", profession: "Data Scientist" },
+  ];
+
+  res.render("array", {
+    listaPersonas: personas,
+  });
+});
+
+// Levantar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor inciado en http://localhost:${PORT}`);
-})
+  console.log(`Servidor iniciado en http://localhost:${PORT}`);
+});
